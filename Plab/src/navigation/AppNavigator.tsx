@@ -24,12 +24,12 @@ const AppNavigator: React.FC = () => {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ title: '풋살 방 목록' }} // 화면 제목
+          options={{ title: 'Kaist 풋살 모집방' }} // 화면 제목
         />
         <Stack.Screen
           name="Room"
           component={RoomScreen}
-          options={{ title: '방 세부 정보' }} // 화면 제목
+          options={{ title: '모집방 세부 정보' }} // 화면 제목
         />
       </Stack.Navigator>
     </NavigationContainer>
