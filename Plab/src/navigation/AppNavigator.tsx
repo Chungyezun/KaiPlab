@@ -4,10 +4,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
 import RoomScreen from '../screens/RoomScreen';
-import SearchScreen from '../screens/SearchScreen'; // 새로운 화면 추가
-import CreateRoomScreen from '../screens/CreateRoomScreen'; // 새로운 화면 추가
-import MyRoomsScreen from '../screens/MyRoomsScreen'; // 새로운 화면 추가
-import MyPageScreen from '../screens/MyPageScreen'; // 새로운 화면 추가
+import SearchScreen from '../screens/SearchScreen';
+import CreateRoomScreen from '../screens/CreateRoomScreen'; 
+import MyRoomsScreen from '../screens/MyRoomsScreen'; 
+import MyPageScreen from '../screens/MyPageScreen'; 
 import Icon from 'react-native-vector-icons/AntDesign';
 
 
@@ -18,23 +18,23 @@ const HomeStack = () => (
   <Stack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: '#1D4ED8', // 헤더 배경색
+        backgroundColor: '#1D4ED8',
       },
-      headerTintColor: '#fff', // 헤더 텍스트 색상
+      headerTintColor: '#fff',
       headerTitleStyle: {
-        fontWeight: 'bold', // 제목 텍스트의 굵기
+        fontWeight: 'bold',
       },
     }}
   >
     <Stack.Screen
       name="Home"
       component={HomeScreen}
-      options={{ title: 'Kaist 풋살 모집방' }} // 화면 제목
+      options={{ title: 'Kaist 풋살 모집방' }}
     />
     <Stack.Screen
       name="Room"
       component={RoomScreen}
-      options={{ title: '모집방 세부 정보' }} // 화면 제목
+      options={{ title: '모집방 세부 정보' }}
     />
   </Stack.Navigator>
 );
@@ -45,7 +45,7 @@ const AppNavigator: React.FC = () => {
       <Tab.Navigator
         initialRouteName="Home"
         screenOptions={({ route }) => ({
-          tabBarActiveTintColor: '#1D4ED8', // 선택된 탭의 색상
+          tabBarActiveTintColor: '#1D4ED8',
           tabBarIcon: ({color, size}) => {
             let iconName;
 

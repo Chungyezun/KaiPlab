@@ -5,7 +5,6 @@ import { RootStackParamList } from '../types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-// 채팅방 데이터 예제
 const initialChatRooms = [
   { id: '1', name: '같이 풋살해요', description: '교내 풋살장 A', startTime: '10:00', currentMembers: 8, totalMembers: 12 },
   { id: '2', name: '풋살 즐기기', description: '교내 풋살장 B', startTime: '12:00', currentMembers: 5, totalMembers: 10 },
@@ -47,16 +46,13 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       className='flex-row items-center justify-between p-4 mb-2 bg-white rounded-lg shadow'
       onPress={() => navigation.navigate('Room', { roomId: item.id })}
     >
-      {/* 왼쪽: 시간 표시 */}
       <Text className='text-sm text-gray-400'>{item.startTime}</Text>
 
-      {/* 중앙: 방 이름과 설명 */}
       <View className='flex-1 px-4'>
         <Text className='text-l font-bold text-blue-600'>{item.name}</Text>
         <Text className='text-m text-gray-500'>{item.description}</Text>
       </View>
 
-      {/* 오른쪽: 현재 인원 / 최대 인원 */}
       <View className='px-2 py-1 bg-gray-200 rounded'>
         <Text className='text-sm text-gray-600'>
           인원: <Text className='font-bold'>{item.currentMembers}</Text>명 / {item.totalMembers}명
@@ -69,7 +65,6 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     <View className='flex-1 p-4 bg-gray-100'>
       <Text className='text-3xl font-bold mb-6 text-blue-600'>풋살 채팅방 목록</Text>
       
-      {/* 방 생성 버튼 */}
       <Button title="방 생성" onPress={toggleModal} color="#1D4ED8" />
 
       <FlatList
@@ -78,7 +73,6 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         keyExtractor={(item) => item.id}
       />
 
-      {/* 방 생성 모달 */}
       <Modal
         animationType="slide"
         transparent={true}

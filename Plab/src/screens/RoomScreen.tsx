@@ -13,7 +13,6 @@ const RoomScreen: React.FC<Props> = ({ route }) => {
       <Text className='text-3xl font-bold mb-6 text-green-600'>
         방 세부 정보 및 채팅 (ID: {roomId})
       </Text>
-      {/* 여기에 채팅 UI와 방 세부 정보 구현 */}
     </View>
   );
 };
