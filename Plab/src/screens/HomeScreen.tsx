@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Modal, TextInput, Button } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types';
+import { Button, Modal, Provider } from '@ant-design/react-native';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
@@ -16,35 +17,27 @@ const initialChatRooms = [
 
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const [chatRooms, setChatRooms] = useState(initialChatRooms);
+  const [selectedRoom, setSelectedRoom] = useState<typeof chatRooms[0] | null>(null);
   const [isModalVisible, setModalVisible] = useState(false);
-  const [newRoomName, setNewRoomName] = useState('');
-  const [newRoomDescription, setNewRoomDescription] = useState('');
-  const [newRoomStartTime, setNewRoomStartTime] = useState('');
-  const [newRoomTotalMembers, setNewRoomTotalMembers] = useState(12);
 
   const toggleModal = () => setModalVisible(!isModalVisible);
 
-  const createRoom = () => {
-    const newRoom = {
-      id: (chatRooms.length + 1).toString(),
-      name: newRoomName,
-      description: newRoomDescription,
-      startTime: newRoomStartTime,
-      currentMembers: 0,
-      totalMembers: newRoomTotalMembers,
-    };
-    setChatRooms([...chatRooms, newRoom]);
-    toggleModal(); // 닫기
-    setNewRoomName('');
-    setNewRoomDescription('');
-    setNewRoomStartTime('');
-    setNewRoomTotalMembers(12);
+  const openRoomModal = (room: typeof chatRooms[0]) => {
+    setSelectedRoom(room);
+    setModalVisible(true);
+  };
+
+  const enterRoom = () => {
+    if (selectedRoom) {
+      navigation.navigate('Room', { roomId: selectedRoom.id });
+      toggleModal(); // 팝업 닫기
+    }
   };
 
   const renderRoomItem = ({ item }: { item: typeof chatRooms[0] }) => (
     <TouchableOpacity
       className='flex-row items-center justify-between p-4 mb-2 bg-white rounded-lg shadow'
-      onPress={() => navigation.navigate('Room', { roomId: item.id })}
+      onPress={() => openRoomModal(item)}
     >
       <Text className='text-sm text-gray-400'>{item.startTime}</Text>
 
@@ -62,50 +55,44 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   );
 
   return (
-    <View className='flex-1 p-4 bg-gray-100'>
-      <Text className='text-3xl font-bold mb-6 text-blue-600'>풋살 채팅방 목록</Text>
-      
-      <Button title="방 생성" onPress={toggleModal} color="#1D4ED8" />
+    <Provider>
+      <View className='flex-1 p-4 bg-gray-100'>
+        <Text className='text-3xl font-bold mb-6 text-blue-600'>풋살 채팅방 목록</Text>
+        
+        <FlatList
+          data={chatRooms}
+          renderItem={renderRoomItem}
+          keyExtractor={(item) => item.id}
+        />
 
-      <FlatList
-        data={chatRooms}
-        renderItem={renderRoomItem}
-        keyExtractor={(item) => item.id}
-      />
+        <Modal
+          visible={isModalVisible}
+          transparent
+          onClose={toggleModal}
+          footer={[]}
+        >
+          <View className='p-6 bg-white rounded-lg'>
+            <Text className='text-xl font-bold mb-4'>{selectedRoom?.name}</Text>
+            <Text className='mb-4'>위치: {selectedRoom?.description}</Text>
+            <Text className='mb-4'>시작 시간: {selectedRoom?.startTime}</Text>
 
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isModalVisible}
-        onRequestClose={toggleModal}
-      >
-        <View className='flex-1 justify-center items-center bg-black bg-opacity-50'>
-          <View className='w-3/4 bg-white p-6 rounded-lg shadow'>
-            <Text className='text-xl font-bold mb-4'>새로운 방 생성</Text>
-            <TextInput
-              className='border p-2 mb-2'
-              placeholder="방 이름"
-              value={newRoomName}
-              onChangeText={setNewRoomName}
-            />
-            <TextInput
-              className='border p-2 mb-2'
-              placeholder="풋살장 위치"
-              value={newRoomDescription}
-              onChangeText={setNewRoomDescription}
-            />
-            <TextInput
-              className='border p-2 mb-2'
-              placeholder="시작 시간 (예: 10:00)"
-              value={newRoomStartTime}
-              onChangeText={setNewRoomStartTime}
-            />
-            <Button title="방 생성하기" onPress={createRoom} color="#1D4ED8" />
-            <Button title="취소" onPress={toggleModal} color="#6B7280" />
+            <View className='flex-row justify-end'>
+              <Button
+                onPress={enterRoom}
+                className='mr-2'
+              >
+                <Text className='text-blue-600'>입장</Text>
+              </Button>
+              <Button
+                onPress={toggleModal}
+              >
+                <Text className='text-black'>닫기</Text>
+              </Button>
+            </View>
           </View>
-        </View>
-      </Modal>
-    </View>
+        </Modal>
+      </View>
+    </Provider>
   );
 };
 

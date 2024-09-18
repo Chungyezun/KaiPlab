@@ -29,12 +29,12 @@ const HomeStack = () => (
     <Stack.Screen
       name="Home"
       component={HomeScreen}
-      options={{ title: 'Kaist 풋살 모집방' }}
+      options={{ title: 'Kaist 풋살 모집방', headerShown: false }}
     />
     <Stack.Screen
       name="Room"
       component={RoomScreen}
-      options={{ title: '모집방 세부 정보' }}
+      options={{ title: '방 세부 정보'}}
     />
   </Stack.Navigator>
 );
@@ -49,7 +49,7 @@ const AppNavigator: React.FC = () => {
           tabBarIcon: ({color, size}) => {
             let iconName;
 
-            if (route.name === "홈1"){
+            if (route.name === "홈"){
               iconName = 'home';
             } else if (route.name === "검색"){
               iconName = 'search1';
@@ -65,7 +65,7 @@ const AppNavigator: React.FC = () => {
           }
         })}
       >
-        <Tab.Screen name="홈1" component={HomeStack} />
+        <Tab.Screen name="홈" component={HomeStack} />
         <Tab.Screen name="검색" component={SearchScreen} />
         <Tab.Screen name="개설" component={CreateRoomScreen} />
         <Tab.Screen name="내방" component={MyRoomsScreen} />
