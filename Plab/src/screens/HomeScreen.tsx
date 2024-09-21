@@ -15,7 +15,7 @@ const initialChatRooms = [
   { id: '6', name: '풋살로 스트레스 해소', description: '교내 풋살장 B', startTime: '20:00', currentMembers: 11, totalMembers: 12 },
 ];
 
-const HomeScreen: React.FC<Props> = ({ navigation }) => {
+export const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const [chatRooms, setChatRooms] = useState(initialChatRooms);
   const [selectedRoom, setSelectedRoom] = useState<typeof chatRooms[0] | null>(null);
   const [isModalVisible, setModalVisible] = useState(false);
@@ -95,5 +95,3 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     </Provider>
   );
 };
-
-export default HomeScreen;

@@ -5,7 +5,7 @@ import { RootStackParamList } from '../types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Room'>;
 
-const RoomScreen: React.FC<Props> = ({ route }) => {
+export const RoomScreen: React.FC<Props> = ({ route }) => {
   const { roomId } = route.params;
 
   return (
@@ -16,5 +16,3 @@ const RoomScreen: React.FC<Props> = ({ route }) => {
     </View>
   );
 };
-
-export default RoomScreen;

@@ -2,12 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeScreen from '../screens/HomeScreen';
-import RoomScreen from '../screens/RoomScreen';
-import SearchScreen from '../screens/SearchScreen';
-import CreateRoomScreen from '../screens/CreateRoomScreen'; 
-import MyRoomsScreen from '../screens/MyRoomsScreen'; 
-import MyPageScreen from '../screens/MyPageScreen'; 
+import { HomeScreen, RoomScreen, SearchScreen, CreateRoomScreen, MyRoomsScreen, MyPageScreen } from '../screens';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 
