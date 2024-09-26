@@ -55,11 +55,11 @@ export const RoomScreen: React.FC<Props> = ({ route, navigation }) => {
         className="flex-1"
       >
         <View className="flex-1">
-          <View className="bg-blue-600 p-1">
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Text className="text-white">← Back</Text>
+          <View className="bg-blue-600 p-4 flex-row items-center relative">
+            <TouchableOpacity onPress={() => navigation.goBack()} className="absolute left-4 z-10">
+              <Text className="text-white text-l">← Back</Text>
             </TouchableOpacity>
-            <Text className="text-2xl font-bold text-white text-center mt-2">
+            <Text className="text-2xl font-bold text-white text-center flex-1">
               {roomName}
             </Text>
           </View>
