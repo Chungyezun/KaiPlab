@@ -29,7 +29,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   const enterRoom = () => {
     if (selectedRoom) {
-      navigation.navigate('Room', { roomId: selectedRoom.id });
+      navigation.navigate('Room', { roomId: selectedRoom.id, roomName: selectedRoom.name });
       toggleModal(); // 팝업 닫기
     }
   };

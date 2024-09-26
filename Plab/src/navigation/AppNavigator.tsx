@@ -29,7 +29,7 @@ const HomeStack = () => (
     <Stack.Screen
       name="Room"
       component={RoomScreen}
-      options={{ title: '방 세부 정보'}}
+      options={{ title: '방 세부 정보', headerShown: false}}
     />
   </Stack.Navigator>
 );
