@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HomeScreen, RoomScreen, SearchScreen, CreateRoomScreen, MyRoomsScreen, MyPageScreen } from '../screens';
+import { HomeScreen, RoomScreen, CreateRoomScreen, MyRoomsScreen, MyPageScreen } from '../screens';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 
@@ -46,8 +46,6 @@ const AppNavigator: React.FC = () => {
 
             if (route.name === "홈"){
               iconName = 'home';
-            } else if (route.name === "검색"){
-              iconName = 'search1';
             } else if (route.name === "개설"){
               iconName = 'pluscircleo';
             } else if (route.name === "내방"){
@@ -61,7 +59,6 @@ const AppNavigator: React.FC = () => {
         })}
       >
         <Tab.Screen name="홈" component={HomeStack} />
-        <Tab.Screen name="검색" component={SearchScreen} />
         <Tab.Screen name="개설" component={CreateRoomScreen} />
         <Tab.Screen name="내방" component={MyRoomsScreen} />
         <Tab.Screen name="마이페이지" component={MyPageScreen} />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity , TextInput, SafeAreaView} from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types';
 import { Button, Modal, Provider } from '@ant-design/react-native';
@@ -17,12 +17,14 @@ const initialChatRooms = [
 
 export const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const [chatRooms, setChatRooms] = useState(initialChatRooms);
-  const [selectedRoom, setSelectedRoom] = useState<typeof chatRooms[0] | null>(null);
+  const [selectedRoom, setSelectedRoom] = useState<ChatRoom | null>(null);
   const [isModalVisible, setModalVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedDay, setSelectedDay] = useState('');
 
   const toggleModal = () => setModalVisible(!isModalVisible);
 
-  const openRoomModal = (room: typeof chatRooms[0]) => {
+  const openRoomModal = (room: ChatRoom) => {
     setSelectedRoom(room);
     setModalVisible(true);
   };
@@ -30,11 +32,41 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const enterRoom = () => {
     if (selectedRoom) {
       navigation.navigate('Room', { roomId: selectedRoom.id, roomName: selectedRoom.name });
-      toggleModal(); // 팝업 닫기
+      toggleModal();
     }
   };
 
-  const renderRoomItem = ({ item }: { item: typeof chatRooms[0] }) => (
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    filterRooms(query, selectedDay);
+  };
+
+  const handleDaySelect = (day: string) => {
+    if (selectedDay === day) {
+      // 이미 선택된 요일을 다시 클릭하면 선택 해제
+      setSelectedDay('');
+      filterRooms(searchQuery, '');
+    } else {
+      setSelectedDay(day);
+      filterRooms(searchQuery, day);
+    }
+  };
+
+  const filterRooms = (query: string, day: string) => {
+    let filteredRooms = initialChatRooms;
+    if (query) {
+      filteredRooms = filteredRooms.filter(room =>
+        room.name.toLowerCase().includes(query.toLowerCase()) ||
+        room.description.toLowerCase().includes(query.toLowerCase())
+      );
+    }
+    if (day) {
+      filteredRooms = filteredRooms.filter(room => room.day === day);
+    }
+    setChatRooms(filteredRooms);
+  };
+
+  const renderRoomItem = ({ item }: { item: ChatRoom }) => (
     <TouchableOpacity
       className='flex-row items-center justify-between p-4 mb-2 bg-white rounded-lg shadow'
       onPress={() => openRoomModal(item)}
@@ -54,44 +86,61 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
     </TouchableOpacity>
   );
 
+  const days = ['월', '화', '수', '목', '금', '토', '일'];
+
   return (
     <Provider>
-      <View className='flex-1 p-4 bg-gray-100'>
-        <Text className='text-3xl font-bold mb-6 text-blue-600'>풋살 채팅방 목록</Text>
-        
-        <FlatList
-          data={chatRooms}
-          renderItem={renderRoomItem}
-          keyExtractor={(item) => item.id}
-        />
+      <SafeAreaView className='flex-1 bg-gray-100'>
+        <View className='p-4'>
+          <Text className='text-3xl font-bold mb-4 text-blue-600'>풋살 채팅방 목록</Text>
+          
+          <TextInput
+            className='bg-white border border-gray-300 rounded-lg px-4 py-2 mb-4'
+            placeholder='방 이름 또는 설명 검색'
+            value={searchQuery}
+            onChangeText={handleSearch}
+          />
 
-        <Modal
-          visible={isModalVisible}
-          transparent
-          onClose={toggleModal}
-          footer={[]}
-        >
-          <View className='p-6 bg-white rounded-lg'>
-            <Text className='text-xl font-bold mb-4'>{selectedRoom?.name}</Text>
-            <Text className='mb-4'>위치: {selectedRoom?.description}</Text>
-            <Text className='mb-4'>시작 시간: {selectedRoom?.startTime}</Text>
-
-            <View className='flex-row justify-end'>
-              <Button
-                onPress={enterRoom}
-                className='mr-2'
+          <View className='flex-row justify-between mb-4'>
+            {days.map(day => (
+              <TouchableOpacity
+                key={day}
+                onPress={() => handleDaySelect(day)}
+                className={`px-3 py-2 rounded-full ${selectedDay === day ? 'bg-blue-500' : 'bg-gray-300'}`}
               >
-                <Text className='text-blue-600'>입장</Text>
-              </Button>
-              <Button
-                onPress={toggleModal}
-              >
-                <Text className='text-black'>닫기</Text>
-              </Button>
-            </View>
+                <Text className={`${selectedDay === day ? 'text-white' : 'text-gray-700'}`}>{day}</Text>
+              </TouchableOpacity>
+            ))}
           </View>
-        </Modal>
-      </View>
+
+          
+          <FlatList
+            data={chatRooms}
+            renderItem={renderRoomItem}
+            keyExtractor={(item) => item.id}
+            ListEmptyComponent={
+              <Text className='text-center text-gray-500 mt-4'>해당하는 방이 없습니다.</Text>
+            }
+          />
+
+          <Modal
+            visible={isModalVisible}
+            transparent
+            onClose={toggleModal}
+            footer={[
+              { text: '입장', onPress: enterRoom },
+              { text: '닫기', onPress: toggleModal }
+            ]}
+          >
+            <View className='p-6 bg-white rounded-lg'>
+              <Text className='text-xl font-bold mb-4'>{selectedRoom?.name}</Text>
+              <Text className='mb-4'>위치: {selectedRoom?.description}</Text>
+              <Text className='mb-4'>시작 시간: {selectedRoom?.startTime}</Text>
+              <Text className='mb-4'>요일: {selectedRoom?.day}</Text>
+            </View>
+          </Modal>
+        </View>
+      </SafeAreaView>
     </Provider>
   );
 };
