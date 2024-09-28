@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { Picker } from '@react-native-picker/picker';
 
 export const CreateRoomScreen: React.FC = () => {
   const [roomName, setRoomName] = useState('');
@@ -8,11 +9,21 @@ export const CreateRoomScreen: React.FC = () => {
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(new Date());
   const [maxMembers, setMaxMembers] = useState('');
+  const [showTimePicker, setShowTimePicker] = useState(false);
 
   const handleCreateRoom = () => {
-    // 여기에 방 생성 로직을 구현합니다.
     console.log('방 생성:', { roomName, description, date, time, maxMembers });
   };
+
+  const handleTimeChange = (hour: number) => {
+    const newTime = new Date(time);
+    newTime.setHours(hour);
+    newTime.setMinutes(0);
+    newTime.setSeconds(0);
+    setTime(newTime);
+  };
+
+  const hours = Array.from({ length: 24 }, (_, i) => i);
 
   return (
     <SafeAreaView className='flex-1 bg-gray-100'>
@@ -43,12 +54,26 @@ export const CreateRoomScreen: React.FC = () => {
         />
         
         <Text className='mb-2 mt-4'>시간:</Text>
-        <DateTimePicker
-          value={time}
-          mode='time'
-          display='default'
-          onChange={(event, selectedTime) => setTime(selectedTime || time)}
-        />
+        <TouchableOpacity
+          className='bg-white border border-gray-300 rounded-lg px-4 py-2'
+          onPress={() => setShowTimePicker(true)}
+        >
+          <Text>{time.getHours().toString().padStart(2, '0')}:00</Text>
+        </TouchableOpacity>
+        
+        {showTimePicker && (
+          <Picker
+            selectedValue={time.getHours()}
+            onValueChange={(itemValue) => {
+              handleTimeChange(itemValue);
+              setShowTimePicker(false);
+            }}
+          >
+            {hours.map((hour) => (
+              <Picker.Item key={hour} label={`${hour.toString().padStart(2, '0')}:00`} value={hour} />
+            ))}
+          </Picker>
+        )}
         
         <TextInput
           className='bg-white border border-gray-300 rounded-lg px-4 py-2 mb-4 mt-4'
