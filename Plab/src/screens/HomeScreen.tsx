@@ -42,8 +42,13 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   const enterRoom = () => {
     if (selectedRoom) {
-      navigation.navigate('Room', { roomId: selectedRoom.id, roomName: selectedRoom.name });
-      toggleModal();
+      if (selectedRoom.currentMembers < selectedRoom.totalMembers) {
+        navigation.navigate('Room', { roomId: selectedRoom.id, roomName: selectedRoom.name });
+        toggleModal();
+      } else {
+        // 최대 인원에 도달한 경우 경고 메시지 표시
+        Alert.alert('입장 불가', '이 방은 이미 최대 인원에 도달했습니다.');
+      }
     }
   };
 
@@ -79,8 +84,11 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   const renderRoomItem = ({ item }: { item: ChatRoom }) => (
     <TouchableOpacity
-      className='flex-row items-center justify-between p-4 mb-2 bg-white rounded-lg shadow'
+      className={`flex-row items-center justify-between p-4 mb-2 bg-white rounded-lg shadow ${
+        item.currentMembers >= item.totalMembers ? 'opacity-50' : ''
+      }`}
       onPress={() => openRoomModal(item)}
+      disabled={item.currentMembers >= item.totalMembers}
     >
       <View className='flex-1'>
         <Text className='text-lg font-bold text-blue-600'>{item.name}</Text>
@@ -138,7 +146,11 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
             transparent
             onClose={toggleModal}
             footer={[
-              { text: '입장', onPress: enterRoom },
+              { 
+                text: '입장', 
+                onPress: enterRoom,
+                disabled: selectedRoom?.currentMembers >= selectedRoom?.totalMembers
+              },
               { text: '닫기', onPress: toggleModal }
             ]}
           >
