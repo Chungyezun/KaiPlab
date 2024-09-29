@@ -3,6 +3,7 @@ import { View, Text, FlatList, TouchableOpacity, TextInput, SafeAreaView } from 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types';
 import { Button, Modal, Provider } from '@ant-design/react-native';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
@@ -32,6 +33,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDay, setSelectedDay] = useState('');
+  const [tempSearchQuery, setTempSearchQuery] = useState('');
 
   const toggleModal = () => setModalVisible(!isModalVisible);
 
@@ -52,9 +54,9 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
     }
   };
 
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-    filterRooms(query, selectedDay);
+  const handleSearch = () => {
+    setSearchQuery(tempSearchQuery);
+    filterRooms(tempSearchQuery, selectedDay);
   };
 
   const handleDaySelect = (day: string) => {
@@ -113,25 +115,33 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
         <View className='p-4'>
           <Text className='text-3xl font-bold mb-4 text-blue-600'>풋살 채팅방 목록</Text>
           
-          <TextInput
-            className='bg-white border border-gray-300 rounded-lg px-4 py-2 mb-4'
-            placeholder='방 이름 또는 설명 검색'
-            value={searchQuery}
-            onChangeText={handleSearch}
-          />
+          <View className='flex-row items-center bg-white border border-gray-300 rounded-lg mb-4'>
+            <TextInput
+              className='flex-1 py-2 px-4'
+              placeholder='지역, 구장, 팀 이름으로 찾기'
+              value={tempSearchQuery}
+              onChangeText={setTempSearchQuery}
+            />
+            <TouchableOpacity 
+              className='p-2' 
+              onPress={handleSearch}
+            >
+              <Icon name="search1" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
 
           <View className='flex-row justify-between mb-4'>
-            {days.map(day => (
+            {['월', '화', '수', '목', '금', '토', '일'].map((day) => (
               <TouchableOpacity
                 key={day}
+                className={`px-3 py-1 rounded-full ${selectedDay === day ? 'bg-blue-500' : 'bg-gray-200'}`}
                 onPress={() => handleDaySelect(day)}
-                className={`px-3 py-2 rounded-full ${selectedDay === day ? 'bg-blue-500' : 'bg-gray-300'}`}
               >
-                <Text className={`${selectedDay === day ? 'text-white font-bold' : 'text-gray-700'}`}>{day}</Text>
+                <Text className={`${selectedDay === day ? 'text-white' : 'text-gray-700'}`}>{day}</Text>
               </TouchableOpacity>
             ))}
           </View>
-          
+
           <FlatList
             data={chatRooms}
             renderItem={renderRoomItem}
