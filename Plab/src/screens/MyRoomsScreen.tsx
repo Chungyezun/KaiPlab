@@ -17,9 +17,9 @@ export const MyRoomsScreen: React.FC = () => {
 
   const renderRoomItem = ({ item }: { item: ChatRoom }) => (
     <TouchableOpacity className='bg-white p-4 mb-2 rounded-lg shadow'>
-      <Text className='text-lg font-bold text-blue-600'>{item.name}</Text>
-      <Text className='text-sm text-gray-500'>{item.description}</Text>
-      <Text className='text-sm text-gray-400'>
+      <Text className='text-lg font-bold text-blue-600 font-yeon-sung'>{item.name}</Text>
+      <Text className='text-sm text-gray-500 font-yeon-sung'>{item.description}</Text>
+      <Text className='text-sm text-gray-400 font-yeon-sung'>
         {item.date.toLocaleDateString()} {item.startTime}
       </Text>
     </TouchableOpacity>
@@ -28,14 +28,14 @@ export const MyRoomsScreen: React.FC = () => {
   return (
     <SafeAreaView className='flex-1 bg-gray-100'>
       <View className='p-4'>
-        <Text className='text-3xl font-bold mb-6 text-blue-600'>내 채팅방</Text>
+        <Text className='text-3xl font-bold mb-6 text-blue-600 font-yeon-sung'>내 채팅방</Text>
         
         <FlatList
           data={myRooms}
           renderItem={renderRoomItem}
           keyExtractor={(item) => item.id}
           ListEmptyComponent={
-            <Text className='text-center text-gray-500 mt-4'>참여 중인 채팅방이 없습니다.</Text>
+            <Text className='text-center text-gray-500 mt-4 font-yeon-sung'>참여 중인 채팅방이 없습니다.</Text>
           }
         />
       </View>

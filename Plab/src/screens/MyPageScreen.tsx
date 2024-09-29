@@ -11,27 +11,27 @@ export const MyPageScreen: React.FC = () => {
   return (
     <SafeAreaView className='flex-1 bg-gray-100'>
       <View className='p-4'>
-        <Text className='text-3xl font-bold mb-6 text-blue-600'>마이페이지</Text>
+        <Text className='text-3xl font-bold mb-6 text-blue-600 font-yeon-sung'>마이페이지</Text>
         
         <View className='items-center mb-6'>
           <Image
             source={{ uri: userInfo.profileImage }}
             className='w-32 h-32 rounded-full mb-4'
           />
-          <Text className='text-2xl font-bold'>{userInfo.name}</Text>
-          <Text className='text-gray-600'>{userInfo.email}</Text>
+          <Text className='text-2xl font-bold font-yeon-sung'>{userInfo.name}</Text>
+          <Text className='text-gray-600 font-yeon-sung'>{userInfo.email}</Text>
         </View>
         
         <TouchableOpacity className='bg-blue-500 rounded-lg px-4 py-2 mb-4'>
-          <Text className='text-white font-bold text-center'>프로필 수정</Text>
+          <Text className='text-white font-bold text-center font-yeon-sung'>프로필 수정</Text>
         </TouchableOpacity>
         
         <TouchableOpacity className='bg-gray-300 rounded-lg px-4 py-2 mb-4'>
-          <Text className='text-gray-700 font-bold text-center'>비밀번호 변경</Text>
+          <Text className='text-gray-700 font-bold text-center font-yeon-sung'>비밀번호 변경</Text>
         </TouchableOpacity>
         
         <TouchableOpacity className='bg-red-500 rounded-lg px-4 py-2'>
-          <Text className='text-white font-bold text-center'>로그아웃</Text>
+          <Text className='text-white font-bold text-center font-yeon-sung'>로그아웃</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

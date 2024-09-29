@@ -8,6 +8,14 @@
     {
       "path": "node_modules/@ant-design/icons-react-native/fonts/antoutline.ttf",
       "sha1": "66720607b7496a48f145425386b2082b73662fd1"
+    },
+    {
+      "path": "assets/fonts/NotoSansKR-VariableFont_wght.ttf",
+      "sha1": "da8ef76ac01bec36758996a4a35ce4ff32fd119c"
+    },
+    {
+      "path": "assets/fonts/YeonSung-Regular.ttf",
+      "sha1": "2e9e364dbc2960153f99f5c7d911b777fc8880a4"
     }
   ]
 }

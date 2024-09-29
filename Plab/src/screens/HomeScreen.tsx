@@ -84,40 +84,17 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
     setChatRooms(filteredRooms);
   };
 
-  const renderRoomItem = ({ item }: { item: ChatRoom }) => (
-    <TouchableOpacity
-      className={`flex-row items-center justify-between p-4 mb-2 bg-white rounded-lg shadow ${
-        item.currentMembers >= item.totalMembers ? 'opacity-50' : ''
-      }`}
-      onPress={() => openRoomModal(item)}
-      disabled={item.currentMembers >= item.totalMembers}
-    >
-      <View className='flex-1'>
-        <Text className='text-lg font-bold text-blue-600'>{item.name}</Text>
-        <Text className='text-sm text-gray-500'>{item.description}</Text>
-        <Text className='text-sm text-gray-400'>
-          {item.date.toLocaleDateString()} ({days[item.date.getDay()]}) {item.startTime}
-        </Text>
-      </View>
-      <View className='px-2 py-1 bg-gray-200 rounded'>
-        <Text className='text-sm text-gray-600'>
-          인원: <Text className='font-bold'>{item.currentMembers}</Text>/{item.totalMembers}
-        </Text>
-      </View>
-    </TouchableOpacity>
-  );
-
   const days = ['일', '월', '화', '수', '목', '금', '토'];
 
   return (
     <Provider>
       <SafeAreaView className='flex-1 bg-gray-100'>
         <View className='p-4'>
-          <Text className='text-3xl font-bold mb-4 text-blue-600'>풋살 채팅방 목록</Text>
+          <Text className='text-3xl font-yeon-sung font-bold mb-4 text-blue-600'>풋살 채팅방 목록</Text>
           
           <View className='flex-row items-center bg-white border border-gray-300 rounded-lg mb-4'>
             <TextInput
-              className='flex-1 py-2 px-4'
+              className='flex-1 py-2 px-4 font-yeon-sung'
               placeholder='지역, 구장, 팀 이름으로 찾기'
               value={tempSearchQuery}
               onChangeText={setTempSearchQuery}
@@ -137,17 +114,38 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
                 className={`px-3 py-1 rounded-full ${selectedDay === day ? 'bg-blue-500' : 'bg-gray-200'}`}
                 onPress={() => handleDaySelect(day)}
               >
-                <Text className={`${selectedDay === day ? 'text-white' : 'text-gray-700'}`}>{day}</Text>
+                <Text className={`${selectedDay === day ? 'text-white' : 'text-gray-700'} font-yeon-sung`}>{day}</Text>
               </TouchableOpacity>
             ))}
           </View>
 
           <FlatList
             data={chatRooms}
-            renderItem={renderRoomItem}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                className={`flex-row items-center justify-between p-4 mb-2 bg-white rounded-lg shadow ${
+                  item.currentMembers >= item.totalMembers ? 'opacity-50' : ''
+                }`}
+                onPress={() => openRoomModal(item)}
+                disabled={item.currentMembers >= item.totalMembers}
+              >
+                <View className='flex-1'>
+                  <Text className='text-lg font-bold text-blue-600 font-yeon-sung'>{item.name}</Text>
+                  <Text className='text-sm text-gray-500 font-yeon-sung'>{item.description}</Text>
+                  <Text className='text-sm text-gray-400 font-yeon-sung'>
+                    {item.date.toLocaleDateString()} ({days[item.date.getDay()]}) {item.startTime}
+                  </Text>
+                </View>
+                <View className='px-2 py-1 bg-gray-200 rounded'>
+                  <Text className='text-sm text-gray-600 font-yeon-sung'>
+                    인원: <Text className='font-bold'>{item.currentMembers}</Text>/{item.totalMembers}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )}
             keyExtractor={(item) => item.id}
             ListEmptyComponent={
-              <Text className='text-center text-gray-500 mt-4'>해당하는 방이 없습니다.</Text>
+              <Text className='text-center text-gray-500 mt-4 font-yeon-sung'>해당하는 방이 없습니다.</Text>
             }
           />
 
@@ -165,11 +163,11 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
             ]}
           >
             <View className='p-6 bg-white rounded-lg'>
-              <Text className='text-xl font-bold mb-4'>{selectedRoom?.name}</Text>
-              <Text className='mb-4'>위치: {selectedRoom?.description}</Text>
-              <Text className='mb-4'>시작 시간: {selectedRoom?.startTime}</Text>
-              <Text className='mb-4'>날짜: {selectedRoom?.date.toLocaleDateString()}</Text>
-              <Text className='mb-4'>요일: {days[selectedRoom?.date.getDay() ?? 0]}</Text>
+              <Text className='text-xl font-bold mb-4 font-yeon-sung'>{selectedRoom?.name}</Text>
+              <Text className='mb-4 font-yeon-sung'>위치: {selectedRoom?.description}</Text>
+              <Text className='mb-4 font-yeon-sung'>시작 시간: {selectedRoom?.startTime}</Text>
+              <Text className='mb-4 font-yeon-sung'>날짜: {selectedRoom?.date.toLocaleDateString()}</Text>
+              <Text className='mb-4 font-yeon-sung'>요일: {days[selectedRoom?.date.getDay() ?? 0]}</Text>
             </View>
           </Modal>
         </View>
