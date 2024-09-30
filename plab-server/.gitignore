@@ -1,0 +1,24 @@
+# 환경 변수 파일
+.env
+
+# Python 관련
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Docker 관련
+docker-compose.yml
+
+# 로그 파일
+*.log
+
+# IDE 관련 (서버 개발에 특화된 것들)
+.vscode/
+.idea/
+*.swp
