@@ -1,12 +1,12 @@
 import React from 'react';
 import AppNavigator from './src/navigation/AppNavigator';
-import {Provider} from '@ant-design/react-native';
+import { Provider } from '@ant-design/react-native';
 
 const App: React.FC = () => {
   return (
-  // <Provider>
-    <AppNavigator />
-  // </Provider>
+    <Provider>
+      <AppNavigator />
+    </Provider>
   );
 };
 

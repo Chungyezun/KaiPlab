@@ -1,19 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList, KeyboardAvoidingView, Platform, SafeAreaView } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types';
+import { RoomScreenProps, ChatMessage } from '../types';
 import { getMessages, sendMessage } from '../api/rooms';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Room'>;
-
-interface ChatMessage {
-  id: string;
-  sender: string;
-  message: string;
-  timestamp: Date;
-}
-
-export const RoomScreen: React.FC<Props> = ({ route, navigation }) => {
+export const RoomScreen: React.FC<RoomScreenProps> = ({ route, navigation }) => {
   const { roomId, roomName } = route.params;
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputMessage, setInputMessage] = useState('');

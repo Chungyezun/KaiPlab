@@ -1,23 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, TextInput, SafeAreaView } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types';
-import { Button, Modal, Provider } from '@ant-design/react-native';
+import { Modal, Provider } from '@ant-design/react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useRooms } from '../context/RoomContext';
-import { joinRoom } from '../api/rooms';
-
-type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
-
-interface ChatRoom {
-  id: string;
-  name: string;
-  description: string;
-  startTime: string;
-  currentMembers: number;
-  totalMembers: number;
-  date: Date;
-}
+import { getRooms, joinRoom} from '../api/rooms';
+import { HomeScreenProps } from '../types';
 
 const initialChatRooms: ChatRoom[] = [
   { id: '1', name: '같이 풋살해요', description: '교내 풋살장 A', startTime: '10:00', currentMembers: 8, totalMembers: 12, date: new Date(2023, 4, 15) },
@@ -29,20 +16,20 @@ const initialChatRooms: ChatRoom[] = [
   { id: '7', name: '일요일 풋살', description: '교내 풋살장 C', startTime: '15:00', currentMembers: 7, totalMembers: 10, date: new Date(2023, 4, 21) },
 ];
 
-export const HomeScreen: React.FC<Props> = ({ navigation }) => {
-  const [chatRooms, setChatRooms] = useState(initialChatRooms);
+export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
+  const { rooms, fetchRooms } = useRooms();
   const [selectedRoom, setSelectedRoom] = useState<ChatRoom | null>(null);
   const [isModalVisible, setModalVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDay, setSelectedDay] = useState('');
   const [tempSearchQuery, setTempSearchQuery] = useState('');
-  const { rooms, fetchRooms } = useRooms();
-  
-  const toggleModal = () => setModalVisible(!isModalVisible);
 
   useEffect(() => {
     fetchRooms();
-  }, []);
+  }, [fetchRooms]);
+  
+  const toggleModal = () => setModalVisible(!isModalVisible);
+  
   const openRoomModal = (room: ChatRoom) => {
     setSelectedRoom(room);
     setModalVisible(true);
@@ -51,7 +38,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const enterRoom = async () => {
     if (selectedRoom) {
       try {
-        await joinRoom(selectedRoom.id, 'current-user-id'); // 실제 사용자 ID로 교체
+        await joinRoom(selectedRoom.id);
         navigation.navigate('Room', { roomId: selectedRoom.id, roomName: selectedRoom.name });
         toggleModal();
       } catch (error) {
@@ -127,7 +114,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
           </View>
 
           <FlatList
-            data={chatRooms}
+            data={rooms}
             renderItem={({ item }) => (
               <TouchableOpacity
                 className={`flex-row items-center justify-between p-4 mb-2 bg-white rounded-lg shadow ${

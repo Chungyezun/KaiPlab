@@ -1,6 +1,7 @@
-export * from "./CreateRoomScreen"
-export * from "./HomeScreen"
-export * from "./MyPageScreen"
-export * from "./MyRoomsScreen"
-export * from "./RoomScreen"
-export * from "./SplashScreen"
+export { HomeScreen } from './HomeScreen';
+export { RoomScreen } from './RoomScreen';
+export { CreateRoomScreen } from './CreateRoomScreen';
+export { MyRoomsScreen } from './MyRoomsScreen';
+export { MyPageScreen } from './MyPageScreen';
+export { SplashScreen } from './SplashScreen';
+export { LoginScreen } from './LoginScreen';

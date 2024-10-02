@@ -1,15 +1,8 @@
 import React from 'react';
 import { View, Text, FlatList, TouchableOpacity, SafeAreaView } from 'react-native';
+import { MyRoomsScreenProps } from '../types';
 
-interface ChatRoom {
-  id: string;
-  name: string;
-  description: string;
-  date: Date;
-  startTime: string;
-}
-
-export const MyRoomsScreen: React.FC = () => {
+export const MyRoomsScreen: React.FC<MyRoomsScreenProps> = () => {
   const myRooms: ChatRoom[] = [
     { id: '1', name: '내가 만든 풋살방', description: '교내 풋살장 A', date: new Date(2023, 4, 20), startTime: '18:00' },
     { id: '2', name: '참여 중인 풋살방', description: '교내 풋살장 B', date: new Date(2023, 4, 22), startTime: '20:00' },

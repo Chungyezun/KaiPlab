@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView, Alert } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { createRoom } from '../api/rooms';
 import { useRooms } from '../context/RoomContext';
+import { CreateRoomScreenProps } from '../types';
 
-export const CreateRoomScreen: React.FC = ({ navigation }) => {
+export const CreateRoomScreen: React.FC<CreateRoomScreenProps> = ({ navigation }) => {
   const [roomName, setRoomName] = useState('');
   const [description, setDescription] = useState('');
   const [date, setDate] = useState(new Date());
