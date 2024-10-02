@@ -89,6 +89,6 @@ KaiPlab은 KAIST 학생들을 위한 풋살 모임 모집 플랫폼입니다. �
 
 ## 연락처
 
-정예준 - chungyezun@kaist.ac.kr
+정예준 - maple0729@kaist.ac.kr
 
 프로젝트 링크: https://github.com/Chungyezun/KaiPlab
