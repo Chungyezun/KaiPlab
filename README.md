@@ -1,4 +1,4 @@
-# KaiPlab: KAIST 풋살 모집 앱
+# KaiPlab: KAIST 풋살 모집 앱 (개발 중)
 
 KaiPlab은 KAIST 학생들을 위한 풋살 모임 모집 플랫폼입니다. 이 앱을 통해 사용자들은 쉽게 풋살 모임을 만들고 참여할 수 있습니다.
 
