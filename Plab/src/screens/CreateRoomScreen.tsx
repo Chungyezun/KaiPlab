@@ -3,8 +3,10 @@ import { View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView } fro
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { createRoom } from '../api/rooms';
+import { useRooms } from '../context/RoomContext';
 
-export const CreateRoomScreen: React.FC = () => {
+export const CreateRoomScreen: React.FC = ({ navigation }) => {
   const [roomName, setRoomName] = useState('');
   const [description, setDescription] = useState('');
   const [date, setDate] = useState(new Date());
@@ -19,9 +21,18 @@ export const CreateRoomScreen: React.FC = () => {
   const [maxMembers, setMaxMembers] = useState('');
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
+  const { fetchRooms } = useRooms();
 
-  const handleCreateRoom = () => {
-    console.log('방 생성:', { roomName, description, date, time, maxMembers });
+  const handleCreateRoom = async () => {
+    try {
+      const roomData = { roomName, description, date, time, maxMembers };
+      await createRoom(roomData);
+      fetchRooms(); // 방 목록 갱신
+      navigation.navigate('Home');
+    } catch (error) {
+      console.error('방 생성에 실패했습니다:', error);
+      Alert.alert('방 생성 실패', '방을 생성할 수 없습니다. 다시 시도해주세요.');
+    }
   };
 
   const handleTimeChange = (hour: number) => {

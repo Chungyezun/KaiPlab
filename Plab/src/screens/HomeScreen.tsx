@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, TextInput, SafeAreaView } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types';
 import { Button, Modal, Provider } from '@ant-design/react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { useRooms } from '../context/RoomContext';
+import { joinRoom } from '../api/rooms';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
@@ -34,22 +36,27 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDay, setSelectedDay] = useState('');
   const [tempSearchQuery, setTempSearchQuery] = useState('');
-
+  const { rooms, fetchRooms } = useRooms();
+  
   const toggleModal = () => setModalVisible(!isModalVisible);
 
+  useEffect(() => {
+    fetchRooms();
+  }, []);
   const openRoomModal = (room: ChatRoom) => {
     setSelectedRoom(room);
     setModalVisible(true);
   };
 
-  const enterRoom = () => {
+  const enterRoom = async () => {
     if (selectedRoom) {
-      if (selectedRoom.currentMembers < selectedRoom.totalMembers) {
+      try {
+        await joinRoom(selectedRoom.id, 'current-user-id'); // 실제 사용자 ID로 교체
         navigation.navigate('Room', { roomId: selectedRoom.id, roomName: selectedRoom.name });
         toggleModal();
-      } else {
-        // 최대 인원에 도달한 경우 경고 메시지 표시
-        Alert.alert('입장 불가', '이 방은 이미 최대 인원에 도달했습니다.');
+      } catch (error) {
+        console.error('방 입장에 실패했습니다:', error);
+        Alert.alert('입장 실패', '방에 입장할 수 없습니다. 다시 시도해주세요.');
       }
     }
   };

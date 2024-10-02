@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeScreen, RoomScreen, CreateRoomScreen, MyRoomsScreen, MyPageScreen, SplashScreen } from '../screens';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { RoomProvider } from '../context/RoomContext';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -64,16 +65,18 @@ const MainTabs = () => (
 
 const AppNavigator: React.FC = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator 
-        screenOptions={{ 
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="Splash" component={SplashScreen} />
-        <Stack.Screen name="MainTabs" component={MainTabs} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <RoomProvider>
+      <NavigationContainer>
+        <Stack.Navigator 
+          screenOptions={{ 
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="Splash" component={SplashScreen} />
+          <Stack.Screen name="MainTabs" component={MainTabs} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </RoomProvider>
   );
 };
 

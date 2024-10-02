@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList, KeyboardAvoidingView, Platform, SafeAreaView } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types';
+import { getMessages, sendMessage } from '../api/rooms';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Room'>;
 
@@ -18,23 +19,31 @@ export const RoomScreen: React.FC<Props> = ({ route, navigation }) => {
   const [inputMessage, setInputMessage] = useState('');
 
   useEffect(() => {
-    // 더미 데이터로 메시지 초기화
-    setMessages([
-      { id: '1', sender: '사용자1', message: '안녕하세요!', timestamp: new Date() },
-      { id: '2', sender: '사용자2', message: '오늘 풋살 재미있었어요!', timestamp: new Date() },
-    ]);
+    fetchMessages();
   }, []);
 
-  const sendMessage = () => {
+  const fetchMessages = async () => {
+    try {
+      const response = await getMessages(roomId);
+      setMessages(response.data);
+    } catch (error) {
+      console.error('메시지를 가져오는 데 실패했습니다:', error);
+    }
+  };
+
+  const handleSendMessage = async () => {
     if (inputMessage.trim()) {
-      const newMessage: ChatMessage = {
-        id: Date.now().toString(),
-        sender: '나',
-        message: inputMessage.trim(),
-        timestamp: new Date(),
-      };
-      setMessages(prevMessages => [...prevMessages, newMessage]);
-      setInputMessage('');
+      try {
+        const messageData = {
+          sender: '나', // 실제 사용자 이름으로 교체
+          message: inputMessage.trim(),
+        };
+        await sendMessage(roomId, messageData);
+        setInputMessage('');
+        fetchMessages(); // 메시지 목록 갱신
+      } catch (error) {
+        console.error('메시지 전송에 실패했습니다:', error);
+      }
     }
   };
 
@@ -79,7 +88,7 @@ export const RoomScreen: React.FC<Props> = ({ route, navigation }) => {
               placeholder="메시지를 입력하세요"
             />
             <TouchableOpacity 
-              onPress={sendMessage}
+              onPress={handleSendMessage}
               className="bg-blue-500 rounded-lg px-4 py-2"
             >
               <Text className="text-white font-bold">전송</Text>
