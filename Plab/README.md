@@ -1,81 +1,94 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# KaiPlab: KAIST 풋살 모집 앱 (프론트엔드)
 
-# Getting Started
+KaiPlab은 KAIST 학생들을 위한 풋살 모임 모집 플랫폼입니다. 이 저장소는 React Native를 사용한 모바일 앱의 프론트엔드 코드를 포함하고 있습니다.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## 주요 기능
 
-## Step 1: Start the Metro Server
+- 풋살 모임 생성 및 참여
+- 실시간 모임 상태 업데이트
+- 사용자 프로필 관리
+- 모임 검색 및 필터링
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## 기술 스택
 
-To start Metro, run the following command from the _root_ of your React Native project:
+- React Native
+- TypeScript
+- React Navigation
+- Axios (API 통신)
 
-```bash
-# using npm
-npm start
+## 시작하기
 
-# OR using Yarn
-yarn start
-```
+### 사전 요구사항
 
-## Step 2: Start your Application
+- Node.js (v14 이상)
+- npm 또는 Yarn
+- React Native 개발 환경 ([React Native 공식 문서](https://reactnative.dev/docs/environment-setup) 참조)
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+### 설치
 
-### For Android
+1. 저장소 클론:
+   ```
+   git clone https://github.com/Chungyezun/KaiPlab.git
+   cd KaiPlab/Plab
+   ```
 
-```bash
-# using npm
-npm run android
+2. 의존성 설치:
+   ```
+   npm install
+   # 또는
+   yarn install
+   ```
 
-# OR using Yarn
-yarn android
-```
+3. iOS의 경우 추가 설정:
+   ```
+   cd ios && pod install && cd ..
+   ```
 
-### For iOS
+### 실행
 
-```bash
-# using npm
-npm run ios
+- iOS 시뮬레이터에서 실행:
+  ```
+  npm run ios
+  # 또는
+  yarn ios
+  ```
 
-# OR using Yarn
-yarn ios
-```
+- Android 에뮬레이터에서 실행:
+  ```
+  npm run android
+  # 또는
+  yarn android
+  ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+## 개발
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+- `src/` 디렉토리에 주요 소스 코드가 있습니다.
+- `src/screens/` 디렉토리에 각 화면 컴포넌트가 있습니다.
+- `src/api/` 디렉토리에 API 통신 관련 코드가 있습니다.
+- `src/navigation/` 디렉토리에 네비게이션 설정이 있습니다.
 
-## Step 3: Modifying your App
+## 빌드 및 배포
 
-Now that you have successfully run the app, let's modify it.
+(여기에 앱 빌드 및 배포 과정에 대한 설명을 추가하세요)
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+## 문제 해결
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+개발 중 문제가 발생하면 다음을 시도해보세요:
 
-## Congratulations! :tada:
+1. 의존성을 다시 설치합니다: `npm install` 또는 `yarn install`
+2. 캐시를 지웁니다: `npm start -- --reset-cache`
+3. iOS의 경우 `Pods`를 다시 설치합니다: `cd ios && pod install && cd ..`
 
-You've successfully run and modified your React Native App. :partying_face:
+## 기여하기
 
-### Now what?
+1. 이 저장소를 포크합니다.
+2. 새 브랜치를 생성합니다 (`git checkout -b feature/AmazingFeature`).
+3. 변경 사항을 커밋합니다 (`git commit -m 'Add some AmazingFeature'`).
+4. 브랜치에 푸시합니다 (`git push origin feature/AmazingFeature`).
+5. Pull Request를 생성합니다.
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+## 연락처
 
-# Troubleshooting
+정예준 - chungyezun@kaist.ac.kr
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
-=======
-# KaiPlab
+프로젝트 링크: https://github.com/Chungyezun/KaiPlab
