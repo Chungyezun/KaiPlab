@@ -12,7 +12,7 @@ class User(UserBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class ChatRoomBase(BaseModel):
     name: str
@@ -28,4 +28,32 @@ class ChatRoom(ChatRoomBase):
     creator_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
+
+class MessageBase(BaseModel):
+    content: str
+    user_id: int
+    room_id: int
+
+class MessageCreate(MessageBase):
+    pass
+
+class Message(MessageBase):
+    id: int
+    timestamp: datetime
+
+    class Config:
+        from_attributes = True
+
+class ChatRoomMemberBase(BaseModel):
+    user_id: int
+    room_id: int
+
+class ChatRoomMemberCreate(ChatRoomMemberBase):
+    pass
+
+class ChatRoomMember(ChatRoomMemberBase):
+    id: int
+
+    class Config:
+        from_attributes = True
